@@ -63,12 +63,14 @@ namespace ClientConvertisseurV2.ViewModels
         }
 
         public RelayCommand BtnSetConversion { get; }
+        public RelayCommand BtnSetConversionInverse { get; }
 
         public ConvertisseurEuroViewModel()
         {
             Devises = new ObservableCollection<Devise>();
             GetDataOnLoadAsync();
             BtnSetConversion = new RelayCommand(ActionSetConversion);
+            BtnSetConversionInverse = new RelayCommand(ActionSetConversionInverse);
         }
 
         public void ActionSetConversion()
@@ -84,6 +86,21 @@ namespace ClientConvertisseurV2.ViewModels
                 return;
             }
             MontantDevise = Math.Round(MontantEuro * SelectedDevise.Taux, 2);
+        }
+
+        public void ActionSetConversionInverse()
+        {
+            if (SelectedDevise == null)
+            {
+                ShowErrorMessage("Erreur de devise", "Vous devez séléctionner une dévise pour effectuer la conversion");
+                return;
+            }
+            if (MontantDevise < 0)
+            {
+                ShowErrorMessage("Erreur de montant", "Vous ne pouvez convertir que des montants positifs");
+                return;
+            }
+            MontantEuro = Math.Round(MontantDevise / SelectedDevise.Taux, 2);
         }
 
         public async void GetDataOnLoadAsync()

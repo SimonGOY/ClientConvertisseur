@@ -73,7 +73,7 @@ namespace ClientConvertisseurV2
             // Ensure the current window is active
             m_window.Activate();
             //  Navigate to the first page
-            rootFrame.Navigate(typeof(ConvertisseurEuroPage));
+            rootFrame.Navigate(typeof(ConvertisseurDevisePage));
 
             MainRoot = m_window.Content as FrameworkElement;
         }
