@@ -9,6 +9,7 @@ using ClientConvertisseurV2.Models;
 using ClientConvertisseurV2.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Controls;
 
 namespace ClientConvertisseurV2.ViewModels
 {
@@ -74,12 +75,12 @@ namespace ClientConvertisseurV2.ViewModels
         {
             if (SelectedDevise == null)
             {
-                //ShowErrorMessage("Erreur de devise", "Vous devez séléctionner une dévise pour effectuer la conversion");
+                ShowErrorMessage("Erreur de devise", "Vous devez séléctionner une dévise pour effectuer la conversion");
                 return;
             }
             if (MontantEuro < 0)
             {
-                //ShowErrorMessage("Erreur de montant", "Vous ne pouvez convertir que des montants positifs");
+                ShowErrorMessage("Erreur de montant", "Vous ne pouvez convertir que des montants positifs");
                 return;
             }
             MontantDevise = Math.Round(MontantEuro * SelectedDevise.Taux, 2);
@@ -91,7 +92,7 @@ namespace ClientConvertisseurV2.ViewModels
             List<Devise> result = await service.GetDevisesAsync("devises");
             if (result == null)
             {
-                //ShowErrorMessage("API non disponible !", "Erreur");
+                ShowErrorMessage("API non disponible !", "Erreur");
             }
             else
             {
@@ -100,6 +101,23 @@ namespace ClientConvertisseurV2.ViewModels
                     Devises.Add(dev);
                 }
             }
+        }
+
+        // Méthode honteusement volée à Dylan Miftary car la méthode MessageAsync ne fonctionne pas
+        private async void ShowErrorMessage(string title, string message)
+        {
+
+            ContentDialog contentDialog = new ContentDialog
+            {
+                Title = title,
+                Content = message,
+                CloseButtonText = "Ok"
+            };
+
+            contentDialog.XamlRoot = App.MainRoot.XamlRoot;
+
+
+            ContentDialogResult result = await contentDialog.ShowAsync();
         }
     }
 }
