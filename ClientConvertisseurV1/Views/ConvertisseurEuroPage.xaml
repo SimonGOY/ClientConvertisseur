@@ -21,7 +21,8 @@
             Width="300"
             Margin="0,20,0,20"
             RelativePanel.AlignHorizontalCenterWithPanel="True"
-            RelativePanel.Below="tbMontant" />
+            RelativePanel.Below="tbMontant"
+            Text="{Binding MontantEuro, Mode=TwoWay}" />
         <TextBlock
             x:Name="tbDevise"
             Margin="0,20,0,20"
@@ -37,7 +38,7 @@
             ItemsSource="{Binding Devises}"
             RelativePanel.AlignHorizontalCenterWithPanel="True"
             RelativePanel.Below="tbDevise"
-            SelectedItem="{Binding selectedDevise}" />
+            SelectedItem="{Binding SelectedDevise, Mode=TwoWay}" />
         <Button
             Name="btConvertir"
             Width="300"
@@ -58,7 +59,8 @@
             Width="300"
             Margin="0,20,0,20"
             RelativePanel.AlignHorizontalCenterWithPanel="True"
-            RelativePanel.Below="tbMontant2" />
+            RelativePanel.Below="tbMontant2"
+            Text="{Binding MontantDevise}" />
 
     </RelativePanel>
 </Page>

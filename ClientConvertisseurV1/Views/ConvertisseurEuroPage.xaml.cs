@@ -1,4 +1,5 @@
 using ClientConvertisseurV1.Services;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -79,7 +80,7 @@ namespace ClientConvertisseurV1.Views
             List<Devise> result = await service.GetDevisesAsync("devises");
             if (result == null)
             {
-                //MessageAsync("API non disponible !", "Erreur");
+                ShowErrorMessage("API non disponible !", "Erreur");
             }
             else
             {
@@ -89,6 +90,39 @@ namespace ClientConvertisseurV1.Views
                 }
             }
         }
+
+        private void BtnConvertir_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedDevise == null)
+            {
+                ShowErrorMessage("Erreur de devise", "Vous devez séléctionner une dévise pour effectuer la conversion");
+                return;
+            }
+            if (MontantEuro < 0)
+            {
+                ShowErrorMessage("Erreur de montant", "Vous ne pouvez convertir que des montants positifs");
+                return;
+            }
+            MontantDevise = Math.Round(MontantEuro * SelectedDevise.Taux, 2);
+        }
+
+        // Méthode honteusement volée à Dylan Miftary car la méthode MessageAsync ne fonctionne pas
+        private async void ShowErrorMessage(string title, string message)
+        {
+
+            ContentDialog contentDialog = new ContentDialog
+            {
+                Title = title,
+                Content = message,
+                CloseButtonText = "Ok"
+            };
+
+            contentDialog.XamlRoot = this.Content.XamlRoot;
+
+
+            ContentDialogResult result = await contentDialog.ShowAsync();
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)
