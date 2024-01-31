@@ -33,12 +33,16 @@
             Name="cbDevises"
             Width="300"
             Margin="0,20,0,20"
+            DisplayMemberPath="Nomdevise"
+            ItemsSource="{Binding Devises}"
             RelativePanel.AlignHorizontalCenterWithPanel="True"
-            RelativePanel.Below="tbDevise" />
+            RelativePanel.Below="tbDevise"
+            SelectedItem="{Binding selectedDevise}" />
         <Button
             Name="btConvertir"
             Width="300"
             Margin="0,20,0,20"
+            Click="BtnConvertir_Click"
             Content="Convertir"
             FontSize="25"
             RelativePanel.AlignHorizontalCenterWithPanel="True"
