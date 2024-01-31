@@ -41,5 +41,34 @@ namespace ClientConvertisseurV2.ViewModels.Tests
             Assert.IsNotNull(convertisseurEuro.Devises);
             CollectionAssert.AreEqual(result, devise, "Liste non égale");
         }
+
+        [TestMethod()]
+        public void GetDataOnLoadAsyncTest_NonOK_WSnondemarre()
+        {
+            //Arrange
+            ConvertisseurEuroViewModel convertisseurEuro = new ConvertisseurEuroViewModel();
+
+            //Assert
+            Assert.AreEqual(convertisseurEuro.Devises.Count(), 0, "WSnondemmarré, aucune devise récupérée");
+        }
+
+        /// <summary>
+        /// Test conversion OK
+        /// </summary>
+        [TestMethod()]
+        public void ActionSetConversionTest()
+        {
+            //Arrange
+            ConvertisseurEuroViewModel convertisseurEuro = new ConvertisseurEuroViewModel();
+            convertisseurEuro.MontantEuro = 100;
+            Devise devise = new Devise(2, "Franc Suisse", 1.07);
+            convertisseurEuro.SelectedDevise = devise;
+
+            //Act
+            convertisseurEuro.ActionSetConversion();
+
+            //Assert
+            Assert.AreEqual(convertisseurEuro.MontantDevise, 107, "Les valeurs ne sont pas égales");
+        }
     }
 }
