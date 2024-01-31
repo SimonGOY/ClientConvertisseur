@@ -71,7 +71,7 @@ namespace ClientConvertisseurV2.ViewModels
             BtnSetConversion = new RelayCommand(ActionSetConversion);
         }
 
-        private void ActionSetConversion()
+        public void ActionSetConversion()
         {
             if (SelectedDevise == null)
             {
@@ -86,7 +86,7 @@ namespace ClientConvertisseurV2.ViewModels
             MontantDevise = Math.Round(MontantEuro * SelectedDevise.Taux, 2);
         }
 
-        private async void GetDataOnLoadAsync()
+        public async void GetDataOnLoadAsync()
         {
             WSService service = new WSService("https://localhost:44389/api/");
             List<Devise> result = await service.GetDevisesAsync("devises");
